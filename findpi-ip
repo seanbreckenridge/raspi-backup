@@ -1,0 +1,9 @@
+#!/bin/bash
+
+# run `arp -a` to find the pi's mac address
+readonly RASPI_MAC_ADDR="${RASPI_MAC_ADDR:?Could not find RASPI_MAC_ADDR environment variable}"
+
+declare PI_IP_ADDR
+PI_IP_ADDR="$(arp -a | grep -m1 "$RASPI_MAC_ADDR" | grep -oP '\([\d\.]+\)' | tr -d '()')" || exit $?
+
+printf '%s' "$PI_IP_ADDR"

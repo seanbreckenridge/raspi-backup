@@ -1,0 +1,57 @@
+#!/bin/bash
+
+THIS_DIR="$(realpath "$(dirname "${BASH_SOURCE[0]}")")"
+cd "$THIS_DIR"
+
+# source configuration
+. configure
+
+# n: dry backup
+BACKUP_DRY=0
+while getopts "nh" opt; do
+	case $opt in
+	n)
+		BACKUP_DRY=1
+		;;
+	h)
+		printf "Backs up my system to my local raspberry pi over the network\n"
+		printf "Provide the -n option to do a --dry-run\n"
+		exit 0
+		;;
+	\?)
+		echo "Invalid option: $OPTARG" >&2
+		exit 1
+		;;
+	*)
+		echo "Unknown argument: $OPTARG" >&2
+		exit 1
+		;;
+	esac
+done
+
+declare IP
+IP="$(./findpi-ip)" || exit $?
+readonly IP
+
+# ssh in and create the base directories
+ssh "pi@${IP}" "$(printf 'cd "%s" && mkdir -p "%s" "%s"' "$BACKUP_DIR_PI" "./${CLONE}" "./${INCREMENTAL}")"
+
+### RSYNC CLONE DIRECTORIES (dont save incremental backups)
+# these are described in the .txt files in this directory
+# items are deleted on the remote machine when they're deleted
+# on mine.
+
+declare -a RSYNC_FLAGS
+# basic configuration flags
+RSYNC_FLAGS=(--archive --perms --partial --progress --human-readable --ignore-errors --delete-before --verbose --recursive)
+# include/exclude lists
+RSYNC_FLAGS+=(--files-from="${THIS_DIR}/clone_include_files.txt" --exclude-from="${THIS_DIR}/clone_exclude_files.txt")
+# if specified, do dry run
+[[ "$BACKUP_DRY" == 1 ]] && RSYNC_FLAGS+=(--dry-run)
+# location from (root dir) to server (see ./configure)
+RSYNC_FLAGS+=(/ "pi@${IP}:${BACKUP_DIR_CLONE}")
+
+rsync "${RSYNC_FLAGS[@]}"
+
+### RDIFF incremental backups
+
