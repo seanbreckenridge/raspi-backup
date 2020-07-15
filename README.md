@@ -10,6 +10,12 @@ The `.txt` files in this directory specify which files to back up.
 
 Expects a `RASPI_MAC_ADDR` environment variable to be set, which is used with `arp -a` to get the IP address of the pi by using the mac address. You can get the mac address by running `arp -a` and comparing the IPs with the info from running `ifconfig` on the pi.
 
+### Run
+
+Run `findpi-ip` to make sure the pi is discoverable. Modify `config` if necessary. Modify the `.txt` files to backup what you want to backup.
+
+`./backuppi`
+
 ### Requirements
 
   * `arp`
@@ -21,3 +27,4 @@ Expects a `RASPI_MAC_ADDR` environment variable to be set, which is used with `a
 TODO:
 
   * Implement `rdiff` incremental backup (all thats done right now is the `rsync`)
+
