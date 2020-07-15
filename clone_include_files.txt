@@ -3,4 +3,6 @@
 /home/sean/Repos/
 /home/sean/.config/
 /home/sean/.local/share/plaintext_playlist/
+/home/sean/.ssh/
+/home/sean/.credentials/
 /usr/local/bin/
