@@ -23,5 +23,8 @@ search_for_pi
 	}
 }
 
-# the head probably isnt needed, just for safety
-grep -oP '([\d\.]+){3,4}' <<<"$PI_IP_ADDR_LINE" | head -n1
+# search for the first IP address match, else exit with an error
+grep -m1 -oP '([\d\.?]+){4}' <<<"$PI_IP_ADDR_LINE" || {
+	printf "Regex failed to match an IP address in '%s'\n" "$PI_IP_ADDR_LINE" >&2
+	exit 1
+}
