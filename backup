@@ -59,4 +59,4 @@ RSYNC_FLAGS+=(--files-from="${THIS_DIR}/clone_include_files.txt" --exclude-from=
 # location from (root dir) to server (see ./configure)
 RSYNC_FLAGS+=(/ "${PI_USER}@${IP}:${BACKUP_DIR_CLONE}")
 
-rsync "${RSYNC_FLAGS[@]}"
+exec rsync "${RSYNC_FLAGS[@]}"
