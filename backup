@@ -17,7 +17,7 @@ while getopts "ndh" opt; do
 	h)
 		printf "Backs up my system to my local raspberry pi over the network\n"
 		printf "Provide the -n option to do a --dry-run\n"
-		printf "Provide the -d option to delete any files not present on this system (--delete-after rsync flag)\n"
+		printf "Provide the -d option to delete any files not present on this system (--delete-before rsync flag)\n"
 		exit 0
 		;;
 	d)
@@ -53,7 +53,7 @@ RSYNC_FLAGS=(--archive --compress --partial --progress --human-readable --ignore
 # if specified, do dry run
 [[ "$BACKUP_DRY" == 1 ]] && RSYNC_FLAGS+=(--dry-run)
 # if specified, delete before
-[[ "$BACKUP_DELETE" == 1 ]] && RSYNC_FLAGS+=(--delete-after)
+[[ "$BACKUP_DELETE" == 1 ]] && RSYNC_FLAGS+=(--delete-before)
 # include/exclude lists
 RSYNC_FLAGS+=(--files-from="${THIS_DIR}/clone_include_files.txt" --exclude-from="${THIS_DIR}/clone_exclude_files.txt")
 # location from (root dir) to server (see ./configure)

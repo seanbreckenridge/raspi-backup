@@ -5,10 +5,9 @@ Script to periodically back up my machine to my raspberry pi backup server. Is p
 Does an `rsync` without deleting files on the remote system, provide the `-n`/`-d` flags for:
 
 ```
-./backup -h
 Backs up my system to my local raspberry pi over the network
 Provide the -n option to do a --dry-run
-Provide the -d option to delete any files not present on this system (--delete-after rsync flag)
+Provide the -d option to delete any files not present on this system (--delete-before rsync flag)
 ```
 
 This assumes that an `ssh` key has already been setup, that `ssh pi@<IP ADDR>` should work without a password prompt.
