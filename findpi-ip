@@ -6,15 +6,20 @@ search_for_pi() {
 # run `arp -a` to find the pi's mac address
 readonly RASPI_MAC_ADDR="${RASPI_MAC_ADDR:?Could not find RASPI_MAC_ADDR environment variable}"
 
+# successively search localhost ports for the pi
 search_for_pi
 [[ -z "$PI_IP_ADDR_LINE" ]] && {
 	# if the pi IP is not in cache, run an outward nmap scan on localhost to try and find it
-	nmap -sP -v 10.1.10.0/24 >&2
-	nmap -sP -v 192.168.1.0/24 >&2
+	nmap -sn -v 10.1.10.0/24 >&2
 	search_for_pi
 	[[ -z "$PI_IP_ADDR_LINE" ]] && {
-		printf "Couldn't find a device on the network with the mac address: %s\n" "${RASPI_MAC_ADDR}" >&2
-		exit 1
+		# try the other local address space
+		nmap -sn -v 192.168.1.0/24 >&2
+		search_for_pi
+		[[ -z "$PI_IP_ADDR_LINE" ]] && {
+			printf "Couldn't find a device on the network with the mac address: %s\n" "${RASPI_MAC_ADDR}" >&2
+			exit 1
+		}
 	}
 }
 grep -oP '\([\d\.]+\)' <<<"$PI_IP_ADDR_LINE" | tr -d '()'
