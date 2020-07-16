@@ -22,4 +22,6 @@ search_for_pi
 		}
 	}
 }
-grep -oP '\([\d\.]+\)' <<<"$PI_IP_ADDR_LINE" | tr -d '()'
+
+# the head probably isnt needed, just for safety
+grep -oP '([\d\.]+){3,4}' <<<"$PI_IP_ADDR_LINE" | head -n1
