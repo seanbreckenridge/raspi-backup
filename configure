@@ -14,22 +14,20 @@ set -e
 havecmd arp
 havecmd ssh
 havecmd rsync
-havecmd rdiff
 havecmd getopts
 havecmd realpath
 set +e
+
+declare -rx PI_USER='pi'
 
 # the directory to back up to on the remote PI
 # this directory should already exists
 declare -rx BACKUP_DIR_PI='../data/'
 
-# names of directories on the PI at $BACKUP_DIR_PI for clone/incremental backups
+# names of directories on the PI at $BACKUP_DIR_PI for clone backups
 # clone is a direct clone (rsync --delete-before) of the clone_{include, exclude}.txt files
-# incremental is an incremental backup (rdiff-backup) for files which that makes sense for (e.g. Documents
 
 declare -rx CLONE='clone'
-declare -rx INCREMENTAL='incremental'
 
 # Full, relative paths on remote PI
 declare -rx BACKUP_DIR_CLONE="${BACKUP_DIR_PI}/${CLONE}"
-declare -rx BACKUP_DIR_INCREMENTAL="${BACKUP_DIR_PI}/${INCREMENTAL}"

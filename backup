@@ -8,7 +8,8 @@ cd "$THIS_DIR"
 
 # n: dry backup
 BACKUP_DRY=0
-while getopts "nh" opt; do
+BACKUP_DELETE=0
+while getopts "ndh" opt; do
 	case $opt in
 	n)
 		BACKUP_DRY=1
@@ -16,7 +17,11 @@ while getopts "nh" opt; do
 	h)
 		printf "Backs up my system to my local raspberry pi over the network\n"
 		printf "Provide the -n option to do a --dry-run\n"
+		printf "Provide the -d option to delete any files not present on this system (--delete-after rsync flag)\n"
 		exit 0
+		;;
+	d)
+		BACKUP_DELETE=1
 		;;
 	\?)
 		echo "Invalid option: $OPTARG" >&2
@@ -35,24 +40,23 @@ IP="$(./findpi-ip)" || exit $?
 readonly IP
 
 # ssh in and create the base directories
-ssh "pi@${IP}" "$(printf 'cd "%s" && mkdir -p "%s" "%s"' "$BACKUP_DIR_PI" "./${CLONE}" "./${INCREMENTAL}")"
+ssh "${PI_USER}@${IP}" "$(printf 'cd "%s" && mkdir -p "%s"' "$BACKUP_DIR_PI" "./${CLONE}")"
 
-### RSYNC CLONE DIRECTORIES (dont save incremental backups)
+### RSYNC CLONE DIRECTORIES
 # these are described in the .txt files in this directory
-# items are deleted on the remote machine when they're deleted
-# on mine.
+# If the -d flag is provided, items are deleted on the
+# remote machine when they're deleted on mine.
 
 declare -a RSYNC_FLAGS
 # basic configuration flags
-RSYNC_FLAGS=(--archive --perms --partial --progress --human-readable --ignore-errors --delete-before --verbose --recursive)
-# include/exclude lists
-RSYNC_FLAGS+=(--files-from="${THIS_DIR}/clone_include_files.txt" --exclude-from="${THIS_DIR}/clone_exclude_files.txt")
+RSYNC_FLAGS=(--archive --compress --partial --progress --human-readable --ignore-errors --verbose --recursive)
 # if specified, do dry run
 [[ "$BACKUP_DRY" == 1 ]] && RSYNC_FLAGS+=(--dry-run)
+# if specified, delete before
+[[ "$BACKUP_DELETE" == 1 ]] && RSYNC_FLAGS+=(--delete-after)
+# include/exclude lists
+RSYNC_FLAGS+=(--files-from="${THIS_DIR}/clone_include_files.txt" --exclude-from="${THIS_DIR}/clone_exclude_files.txt")
 # location from (root dir) to server (see ./configure)
-RSYNC_FLAGS+=(/ "pi@${IP}:${BACKUP_DIR_CLONE}")
+RSYNC_FLAGS+=(/ "${PI_USER}@${IP}:${BACKUP_DIR_CLONE}")
 
 rsync "${RSYNC_FLAGS[@]}"
-
-### RDIFF incremental backups
-

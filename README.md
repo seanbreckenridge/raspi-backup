@@ -2,7 +2,14 @@
 
 Scripts for periodically backing up my machine to my local raspberry pi backup server. Is pretty minimal, just uses an raspbian with an external 4TB that gets mounted on boot. See [here](https://exobrain.sean.fish/raspi/) for notes I took while setting that up.
 
-Does two types of backups, `rsync` for general files, and then `rdiff-backup` for incremental backups (e.g. for documents which may change)
+Does an `rsync` without deleting files on the remote system, provide the `-n`/`-d` flags for:
+
+```
+./backup -h
+Backs up my system to my local raspberry pi over the network
+Provide the -n option to do a --dry-run
+Provide the -d option to delete any files not present on this system (--delete-after rsync flag)
+```
 
 This assumes that an `ssh` key has already been setup, that `ssh pi@<IP ADDR>` should work without a password prompt.
 
@@ -14,17 +21,13 @@ Expects a `RASPI_MAC_ADDR` environment variable to be set, which is used with `a
 
 Run `findpi-ip` to make sure the pi is discoverable. Modify `config` if necessary. Modify the `.txt` files to backup what you want to backup.
 
-`./backuppi`
+`./backup`
 
 ### Requirements
 
   * `arp`
   * `rsync`
-  * `rdiff`
   * `getopts`
   * `realpath`
-
-TODO:
-
-  * Implement `rdiff` incremental backup (all thats done right now is the `rsync`)
+  * `nmap`
 

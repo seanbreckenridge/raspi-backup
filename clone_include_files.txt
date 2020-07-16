@@ -1,6 +1,7 @@
 # non-incremental-backup, relative to the root directory
 /home/data/
 /home/sean/Repos/
+/home/sean/Documents/
 /home/sean/.config/
 /home/sean/.local/share/plaintext_playlist/
 /home/sean/.ssh/
