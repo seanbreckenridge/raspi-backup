@@ -1,2 +1,5 @@
 # non-incremental-backup, relative to the root directory
-/home/data/steam
+/home/data/steam/
+/home/sean/.config/Slack/
+/home/sean/.config/discord/
+/home/sean/.config/balena-etcher/
