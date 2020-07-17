@@ -14,14 +14,14 @@ while getopts "ndh" opt; do
 	n)
 		BACKUP_DRY=1
 		;;
+	d)
+		BACKUP_DELETE=1
+		;;
 	h)
 		printf "Backs up my system to my local raspberry pi over the network\n"
 		printf "Provide the -n option to do a --dry-run\n"
 		printf "Provide the -d option to delete any files not present on this system (--delete-before rsync flag)\n"
 		exit 0
-		;;
-	d)
-		BACKUP_DELETE=1
 		;;
 	\?)
 		echo "Invalid option provided. Run $0 -h for help" >&2
