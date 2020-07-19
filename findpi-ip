@@ -3,8 +3,18 @@
 search_for_pi() {
 	PI_IP_ADDR_LINE="$(arp -a | grep -m1 "$RASPI_MAC_ADDR")"
 }
+
+RASPI_MAC_ADDR="${RASPI_MAC_ADDR}"
 # run `arp -a` to find the pi's mac address
-readonly RASPI_MAC_ADDR="${RASPI_MAC_ADDR:?Could not find RASPI_MAC_ADDR environment variable}"
+if [[ -z "$RASPI_MAC_ADDR" ]]; then
+	mac_addr_file="$(dirname "${BASH_SOURCE[0]}")/mac_addr"
+	[[ -e "$mac_addr_file" ]] && . "$mac_addr_file"
+fi
+if [[ -z "$RASPI_MAC_ADDR" ]]; then
+	echo "Couldn't find RASPI_MAC_ADDR environment variable" >&2
+	exit 1
+fi
+readonly RASPI_MAC_ADDR
 
 # successively search localhost ports for the pi
 search_for_pi

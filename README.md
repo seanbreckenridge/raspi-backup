@@ -14,7 +14,12 @@ This assumes that an `ssh` key has already been setup, that `ssh pi@<IP ADDR>` s
 
 The `.txt` files in this directory specify which files to back up.
 
-Expects a `RASPI_MAC_ADDR` environment variable to be set, which is used with `arp -a` to get the IP address of the pi by using the mac address. You can get the mac address by running `arp -a` and comparing the IPs with the info from running `ifconfig` on the pi.
+Expects a `RASPI_MAC_ADDR` environment variable to be set, which is used with `arp -a` to get the IP address of the pi by using the mac address. You can get the mac address by running `arp -a` and comparing the IPs with the info from running `ifconfig` on the pi. Can also `export` the `RASPI_MAC_ADDR` from a file in this directory, `./mac_addr`, like:
+
+```
+#!/bin/sh
+export RASPI_MAC_ADDR="b8:27:eb:3d:42:dc"
+```
 
 ### Run
 

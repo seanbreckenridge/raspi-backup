@@ -3,4 +3,6 @@
 /home/data/media/pictures/Screenshots/
 /home/sean/.config/Slack/
 /home/sean/.config/discord/
+/home/sean/.config/pulse/
+/home/sean/.config/configstore/
 /home/sean/.config/balena-etcher/
