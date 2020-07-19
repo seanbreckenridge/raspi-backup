@@ -6,7 +6,6 @@ cd "$THIS_DIR"
 # source configuration
 . configure
 
-# n: dry backup
 BACKUP_DRY=0
 BACKUP_DELETE=0
 while getopts "ndh" opt; do
