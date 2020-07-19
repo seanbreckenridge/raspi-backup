@@ -1,11 +1,10 @@
 #!/bin/bash
 
 havecmd() {
-	BINARY="${1:?Must provide command to check}"
-	if command -v "$BINARY" >/dev/null 2>&1; then
+	if command -v "$1" >/dev/null 2>&1; then
 		return 0
 	else
-		printf "Could not find '%s' on your \$PATH\n" "$BINARY"
+		printf 'Could not find %s on your $PATH\n' "$1"
 		return 1
 	fi
 }
