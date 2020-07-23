@@ -6,3 +6,5 @@
 /home/sean/.config/pulse/
 /home/sean/.config/configstore/
 /home/sean/.config/balena-etcher/
+/home/sean/.config/BraveSoftware/
+/home/sean/.config/chromium/
