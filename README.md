@@ -23,7 +23,7 @@ export RASPI_MAC_ADDR="b8:27:eb:3d:42:dc"
 
 ### Run
 
-Run `findpi-ip` to make sure the pi is discoverable. Modify `config` if necessary. Modify the `.txt` files to backup what you want to backup.
+Run `findpi-ip` to make sure the pi is discoverable. Modify `configure` if necessary. Modify the `.txt` files to backup what you want to backup.
 
 `./backup`
 
