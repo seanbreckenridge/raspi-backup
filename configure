@@ -17,6 +17,8 @@ havecmd getopts
 havecmd realpath
 set +e
 
+# name of user to ssh into machine
+# default username for raspbian is 'pi'
 declare -rx PI_USER='pi'
 
 # the directory to back up to on the remote PI
