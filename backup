@@ -35,7 +35,7 @@ done
 
 declare IP
 # exits if PI cannot be found
-IP="$(./findpi-ip)" || exit $?
+IP="$(./findpi)" || exit $?
 readonly IP
 
 # ssh in and create the base directories
