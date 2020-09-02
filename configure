@@ -23,7 +23,7 @@ declare -rx PI_USER='pi'
 
 # the directory to back up to on the remote PI
 # this directory should already exist
-declare -rx BACKUP_DIR_PI='../data/'
+declare -rx BACKUP_DIR_PI='../data'
 
 # names of directories on the PI at $BACKUP_DIR_PI for clone backups
 # clone is a direct clone (rsync --delete-before) of the clone_{include, exclude}.txt files
