@@ -8,3 +8,4 @@
 /home/sean/.config/balena-etcher/
 /home/sean/.config/BraveSoftware/
 /home/sean/.config/chromium/
+/home/sean/.config/google-chrome/
