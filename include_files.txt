@@ -6,6 +6,8 @@
 /home/sean/.config/
 /home/sean/.local/share/plaintext_playlist/
 /home/sean/.local/share/ipgeocache/
+/home/sean/.local/share/ttt_history.csv
+/home/sean/.local/share/window_events.csv
 /home/sean/.ssh/
 /home/sean/.credentials/
 /usr/local/bin/

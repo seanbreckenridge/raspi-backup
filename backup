@@ -33,12 +33,14 @@ while getopts "ndh" opt; do
 	esac
 done
 
+echo "Searching for PI ip..."
 declare IP
 # exits if PI cannot be found
 IP="$(./findpi)" || exit $?
 readonly IP
 
 # ssh in and create the base directories
+printf "Creating target directory on pi (%s), incase it doesn't exist...\n" "$BACKUP_DIR_CLONE"
 ssh "${PI_USER}@${IP}" "$(printf 'cd "%s" && mkdir -p "%s"' "$BACKUP_DIR_PI" "./${CLONE}")"
 
 ### RSYNC CLONE DIRECTORIES
@@ -54,8 +56,9 @@ RSYNC_FLAGS=(--archive --compress --partial --progress --human-readable --ignore
 # if specified, delete before
 [[ "$BACKUP_DELETE" == 1 ]] && RSYNC_FLAGS+=(--delete-before)
 # include/exclude lists
-RSYNC_FLAGS+=(--files-from="${THIS_DIR}/clone_include_files.txt" --exclude-from="${THIS_DIR}/clone_exclude_files.txt")
+RSYNC_FLAGS+=(--files-from="${THIS_DIR}/include_files.txt" --exclude-from="${THIS_DIR}/exclude_files.txt")
 # location from (root dir) to server (see ./configure)
 RSYNC_FLAGS+=(/ "${PI_USER}@${IP}:${BACKUP_DIR_CLONE}")
 
+echo "Executing rsync: ${RSYNC_FLAGS[@]}"
 exec rsync "${RSYNC_FLAGS[@]}"
