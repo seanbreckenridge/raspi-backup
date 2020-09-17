@@ -62,5 +62,5 @@ RSYNC_FLAGS+=(--files-from="${THIS_DIR}/include_files.txt" --exclude-from="${THI
 # location from (root dir) to server (see ./configure)
 RSYNC_FLAGS+=(/ "${PI_USER}@${IP}:${BACKUP_DIR_CLONE}")
 
-echo "Executing rsync: ${RSYNC_FLAGS[@]}"
+echo "Executing: rsync ${RSYNC_FLAGS[@]}"
 exec rsync "${RSYNC_FLAGS[@]}"
