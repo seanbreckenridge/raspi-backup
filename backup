@@ -50,17 +50,17 @@ ssh "${PI_USER}@${IP}" "$(printf 'cd "%s" && mkdir -p "%s"' "$BACKUP_DIR_PI" "./
 # If the -d flag is provided, items are deleted on the
 # remote machine when they're deleted on mine.
 
-declare -a RSYNC_FLAGS
+declare -a RSYNC_CMD
 # basic configuration flags
-RSYNC_FLAGS=(--archive --compress --partial --progress --human-readable --ignore-errors --verbose --recursive)
+RSYNC_CMD=(rsync --archive --compress --partial --progress --human-readable --ignore-errors --verbose --recursive)
 # if specified, do dry run
-[[ "$BACKUP_DRY" == 1 ]] && RSYNC_FLAGS+=(--dry-run)
+[[ "$BACKUP_DRY" == 1 ]] && RSYNC_CMD+=(--dry-run)
 # if specified, delete before
-[[ "$BACKUP_DELETE" == 1 ]] && RSYNC_FLAGS+=(--delete-before)
+[[ "$BACKUP_DELETE" == 1 ]] && RSYNC_CMD+=(--delete-before)
 # include/exclude lists
-RSYNC_FLAGS+=(--files-from="${THIS_DIR}/include_files.txt" --exclude-from="${THIS_DIR}/exclude_files.txt")
+RSYNC_CMD+=(--files-from="${THIS_DIR}/include_files.txt" --exclude-from="${THIS_DIR}/exclude_files.txt")
 # location from (root dir) to server (see ./configure)
-RSYNC_FLAGS+=(/ "${PI_USER}@${IP}:${BACKUP_DIR_CLONE}")
+RSYNC_CMD+=(/ "${PI_USER}@${IP}:${BACKUP_DIR_CLONE}")
 
-echo "Executing: rsync ${RSYNC_FLAGS[@]}"
-exec rsync "${RSYNC_FLAGS[@]}"
+echo "Executing: ${RSYNC_CMD[@]}"
+exec "${RSYNC_CMD[@]}"
