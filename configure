@@ -32,13 +32,11 @@ set +e
 # default username for raspbian is 'pi'
 declare -rx PI_USER='pi'
 
-# the directory to back up to on the remote PI
-# this directory should already exist
+# the base directory to back up to on the remote PI
 declare -rx BACKUP_DIR_PI='../data'
 
-# names of directories on the PI at $BACKUP_DIR_PI for clone backups
+# names of directory on the remote machine at $BACKUP_DIR_PI for backups
 # clone is a direct clone (rsync --delete-before) of the clone_{include, exclude}.txt files
-
 declare -rx CLONE='clone'
 
 # Full, relative paths on remote PI
