@@ -23,11 +23,9 @@ export RASPI_MAC_ADDR="b8:27:eb:3d:42:dc"
 
 ### Run
 
-Run `findpi` to make sure the pi is discoverable. Modify `configure` if necessary. Modify the `.txt` include/exclude lists to backup what you want to backup.
+Run `./findpi` to make sure the pi is discoverable. Modify `configure` if necessary (to change the target directory/username). Modify the include/exclude `.txt` files to backup what you want to backup.
 
 `./backup`
-
-I run `./backup` in the background every 6 hours using [this](https://github.com/seanbreckenridge/bgproc), and `./backup -d` every 3 days using [`this`](https://sean.fish/d/housekeeping?dark)
 
 ### Requirements
 
@@ -36,4 +34,8 @@ I run `./backup` in the background every 6 hours using [this](https://github.com
   * `getopts`
   * `realpath`
   * `nmap`
+
+---
+
+I run `./backup` in the background every 6 hours using [this](https://github.com/seanbreckenridge/bgproc), and `./backup -d` every 3 days using [`this`](https://sean.fish/d/housekeeping?dark)
 
