@@ -1,4 +1,3 @@
-# non-incremental-backup, relative to the root directory
 /home/data/media/pictures/Screenshots/
 /home/sean/.config/Slack/
 /home/sean/.config/discord/
