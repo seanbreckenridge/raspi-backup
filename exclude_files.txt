@@ -1,4 +1,5 @@
 /home/data/media/pictures/Screenshots/
+/home/data/steam/
 /home/sean/.config/Slack/
 /home/sean/.config/discord/
 /home/sean/.config/pulse/
