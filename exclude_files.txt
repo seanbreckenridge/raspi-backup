@@ -2,9 +2,12 @@
 /home/data/steam/
 /home/sean/.config/Slack/
 /home/sean/.config/discord/
+/home/sean/.config/Microsoft/
+/home/sean/.config/Microsoft Teams - Preview/
 /home/sean/.config/pulse/
 /home/sean/.config/configstore/
 /home/sean/.config/balena-etcher/
 /home/sean/.config/BraveSoftware/
 /home/sean/.config/chromium/
 /home/sean/.config/google-chrome/
+/home/sean/.config/coc/
