@@ -1,7 +1,7 @@
-#!/bin/bash
+#!/bin/bash -u
 
 THIS_DIR="$(realpath "$(dirname "${BASH_SOURCE[0]}")")"
-cd "$THIS_DIR"
+cd "${THIS_DIR}" || exit $?
 
 # source configuration
 . configure
@@ -9,7 +9,7 @@ cd "$THIS_DIR"
 BACKUP_DRY=0
 BACKUP_DELETE=0
 while getopts "ndh" opt; do
-	case $opt in
+	case "${opt}" in
 	n)
 		BACKUP_DRY=1
 		;;
@@ -27,7 +27,7 @@ while getopts "ndh" opt; do
 		exit 1
 		;;
 	*)
-		echo "Unknown argument: $OPTARG" >&2
+		echo "Unknown argument: ${OPTARG}" >&2
 		exit 1
 		;;
 	esac
@@ -42,8 +42,9 @@ readonly IP
 printf 'IP: %s\n' "$IP"
 
 # ssh in and create the base directories
-printf "Creating target directory on pi (%s), incase it doesn't exist...\n" "$BACKUP_DIR_CLONE"
-ssh "${PI_USER}@${IP}" "$(printf 'cd "%s" && mkdir -p "%s"' "$BACKUP_DIR_PI" "./${CLONE}")"
+printf "Creating target directory on pi (%s), incase it doesn't exist...\n" "${BACKUP_DIR_CLONE}"
+# shellcheck disable=SC2029
+ssh "${PI_USER}@${IP}" "$(printf 'cd "%s" && mkdir -p "%s"' "${BACKUP_DIR_PI}" "./${CLONE}")"
 
 ### RSYNC CLONE DIRECTORIES
 # these are described in the .txt files in this directory
@@ -54,13 +55,13 @@ declare -a RSYNC_CMD
 # basic configuration flags
 RSYNC_CMD=(rsync --archive --compress --partial --progress --human-readable --ignore-errors --verbose --recursive)
 # if specified, do dry run
-[[ "$BACKUP_DRY" == 1 ]] && RSYNC_CMD+=(--dry-run)
+[[ "${BACKUP_DRY}" == 1 ]] && RSYNC_CMD+=(--dry-run)
 # if specified, delete before
-[[ "$BACKUP_DELETE" == 1 ]] && RSYNC_CMD+=(--delete-before)
+[[ "${BACKUP_DELETE}" == 1 ]] && RSYNC_CMD+=(--delete-before)
 # include/exclude lists
 RSYNC_CMD+=(--files-from="${THIS_DIR}/include_files.txt" --exclude-from="${THIS_DIR}/exclude_files.txt")
 # location from (root dir) to server (see ./configure)
 RSYNC_CMD+=(/ "${PI_USER}@${IP}:${BACKUP_DIR_CLONE}")
 
-echo "Executing: ${RSYNC_CMD[@]}"
+echo "Executing: ${RSYNC_CMD[*]}"
 exec "${RSYNC_CMD[@]}"
