@@ -3,7 +3,6 @@
 /home/sean/Repos/
 /home/sean/Documents/
 /home/sean/.config/
-/home/sean/.local/share/url_metadata/
 /home/sean/.local/share/plaintext_playlist/
 /home/sean/.local/share/ipgeocache/
 /home/sean/.local/share/ttt_history.csv
