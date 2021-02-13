@@ -1,6 +1,6 @@
 # raspi-backup
 
-Script to periodically back up my machine to my raspberry pi backup server. Is pretty minimal, just uses headless raspbian with an external 4TB that gets mounted on boot. See [here](https://exobrain.sean.fish/raspi/) for notes I took while setting that up.
+Script to periodically back up my machine to my raspberry pi backup server. Is pretty minimal, just uses headless raspbian with an external 4TB that gets mounted on boot. See [here](https://exobrain.sean.fish/tech_hardware/raspi/) for notes I took while setting that up.
 
 Does an `rsync` without deleting files on the remote system, provide the `-n`/`-d` flags for:
 
