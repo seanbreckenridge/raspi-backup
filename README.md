@@ -35,6 +35,3 @@ Run `./findpi` to make sure the pi is discoverable. Modify `configure` if necess
 - `realpath`
 - `nmap`
 
----
-
-I run `./backup` in the background every 6 hours using [this](https://github.com/seanbreckenridge/bgproc), and `./backup -d` every 3 days using [`this`](https://sean.fish/d/housekeeping?dark)
